@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SophosSolutions.Overtimes.WebAPI", "SophosSolutions.Overtimes.WebAPI\SophosSolutions.Overtimes.WebAPI.csproj", "{29593C5F-C6B3-4557-AFB1-C50E7368B894}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SophosSolutions.Overtimes.Tests", "SophosSolutions.Overtimes.Tests\SophosSolutions.Overtimes.Tests.csproj", "{5411267F-B763-45EA-9042-FBC4CFC30ECE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SophosSolutions.Overtimes.Infrastructure", "SophosSolutions.Overtimes.Infrastructure\SophosSolutions.Overtimes.Infrastructure.csproj", "{2B62D83B-B588-4C8F-A8E8-BFD9EF3CAB68}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SophosSolutions.Overtimes.Models", "SophosSolutions.Overtimes.Models\SophosSolutions.Overtimes.Models.csproj", "{312AE3F3-37C1-4A0D-98DF-5E61B786ED5F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SophosSolutions.Overtimes.Application", "SophosSolutions.Overtimes.Application\SophosSolutions.Overtimes.Application.csproj", "{1DB300DA-42BC-44E9-9EC5-D84A32D93816}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domain", "2.Domain", "{905449D7-D269-4898-8C84-F93D1D9F59C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Tests", "4.Tests", "{9075022B-C083-4995-B82F-640C54E89F8F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Infrastructure", "3.Infrastructure", "{236B3D62-4D84-49F6-A0F0-73493D6B0809}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Clients", "1.Clients", "{0C917202-840B-4F3C-8E33-7D5E91FF85A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29593C5F-C6B3-4557-AFB1-C50E7368B894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29593C5F-C6B3-4557-AFB1-C50E7368B894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29593C5F-C6B3-4557-AFB1-C50E7368B894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29593C5F-C6B3-4557-AFB1-C50E7368B894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5411267F-B763-45EA-9042-FBC4CFC30ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5411267F-B763-45EA-9042-FBC4CFC30ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5411267F-B763-45EA-9042-FBC4CFC30ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5411267F-B763-45EA-9042-FBC4CFC30ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B62D83B-B588-4C8F-A8E8-BFD9EF3CAB68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B62D83B-B588-4C8F-A8E8-BFD9EF3CAB68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B62D83B-B588-4C8F-A8E8-BFD9EF3CAB68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B62D83B-B588-4C8F-A8E8-BFD9EF3CAB68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{312AE3F3-37C1-4A0D-98DF-5E61B786ED5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{312AE3F3-37C1-4A0D-98DF-5E61B786ED5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{312AE3F3-37C1-4A0D-98DF-5E61B786ED5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{312AE3F3-37C1-4A0D-98DF-5E61B786ED5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DB300DA-42BC-44E9-9EC5-D84A32D93816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DB300DA-42BC-44E9-9EC5-D84A32D93816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DB300DA-42BC-44E9-9EC5-D84A32D93816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DB300DA-42BC-44E9-9EC5-D84A32D93816}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{29593C5F-C6B3-4557-AFB1-C50E7368B894} = {0C917202-840B-4F3C-8E33-7D5E91FF85A3}
+		{5411267F-B763-45EA-9042-FBC4CFC30ECE} = {9075022B-C083-4995-B82F-640C54E89F8F}
+		{2B62D83B-B588-4C8F-A8E8-BFD9EF3CAB68} = {236B3D62-4D84-49F6-A0F0-73493D6B0809}
+		{312AE3F3-37C1-4A0D-98DF-5E61B786ED5F} = {905449D7-D269-4898-8C84-F93D1D9F59C4}
+		{1DB300DA-42BC-44E9-9EC5-D84A32D93816} = {905449D7-D269-4898-8C84-F93D1D9F59C4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5A9CE0C5-F787-4BAA-8C3B-EF4A2F0DED70}
+	EndGlobalSection
+EndGlobal
