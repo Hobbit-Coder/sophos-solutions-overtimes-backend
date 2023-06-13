@@ -35,3 +35,9 @@ Este proyecto fue desarrollado con .Net 6.
    Nota: No es necesario ejecutar migraciones, el proyecto lo hace automáticamente al iniciar.
 3. Limpiar y compilar la solución.
 4. Ejecutar.
+
+## Notas
+
+El objetivo del ejercicio en el proyecto backend no se logró al 100%, es necesario aplicar más reglas de negocio descritas en el documento y validaciones para el funcionamiento productivo de la aplicación
+
+## ¡Muchas gracias por tu gran atención!
