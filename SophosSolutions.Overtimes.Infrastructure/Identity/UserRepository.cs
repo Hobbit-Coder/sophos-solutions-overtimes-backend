@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using SophosSolutions.Overtimes.Application.Common.Interfaces.Repositories;
+using SophosSolutions.Overtimes.Application.Common.Models;
+using SophosSolutions.Overtimes.Infrastructure.Common;
 using SophosSolutions.Overtimes.Infrastructure.Persistence.Contexts;
 using SophosSolutions.Overtimes.Models.Entities;
-using SophosSolutions.Overtimes.Models.Enums;
+using SophosSolutions.Overtimes.Models.ValueObjects;
 
 namespace SophosSolutions.Overtimes.Infrastructure.Identity;
 
@@ -17,16 +19,16 @@ public class UserRepository : Repository<User>, IUserRepository
         _userManager = userManager;
     }
 
-    public override async Task<bool> UpdateAsync(User user)
+    public async Task<Result> UpdateUserAsync(User user)
     {
         var result = await _userManager.UpdateAsync(user);
-        return result.Succeeded;
+        return result.ToApplicationResult();
     }
 
-    public async Task<bool> CreateAsync(User user, string password)
+    public async Task<Result> CreateAsync(User user, string password)
     {
         var result = await _userManager.CreateAsync(user, password);
-        return result.Succeeded;
+        return result.ToApplicationResult();
     }
 
     public Task<bool> ValidatePasswordAsync(User user, string password)
@@ -39,10 +41,12 @@ public class UserRepository : Repository<User>, IUserRepository
         return _userManager.FindByEmailAsync(email);
     }
 
-    public async Task<bool> AddRoleAsync(User user, Roles role)
+    public async Task<Result> AddRoleAsync(User user, RoleName role)
     {
-        var result = await _userManager.AddToRoleAsync(user, role.ToString());
-        return result.Succeeded;
+        var roles = await _userManager.GetRolesAsync(user);
+        await _userManager.RemoveFromRolesAsync(user, roles);
+        var roleResult = await _userManager.AddToRoleAsync(user, role);
+        return roleResult.ToApplicationResult();
     }
 
     public Task<IList<string>> GetRolesAsync(User user)

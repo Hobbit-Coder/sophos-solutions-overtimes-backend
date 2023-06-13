@@ -9,18 +9,18 @@ using System.Text;
 
 namespace SophosSolutions.Overtimes.WebAPI.Utils;
 
-public class JwtService : IJwtService
+public class JwtTokenGeneratorService : IJwtTokenGeneratorService
 {
     private readonly IConfiguration _configuration;
     private readonly IUnitOfWork _unitOfWork;
 
-    public JwtService(IConfiguration configuration, IUnitOfWork unitOfWork)
+    public JwtTokenGeneratorService(IConfiguration configuration, IUnitOfWork unitOfWork)
     {
         _configuration = configuration;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<JwtDetails> GenerateJWT(User user)
+    public async Task<JwtDetails> Generate(User user)
     {
         var roles = await _unitOfWork.UserRepository.GetRolesAsync(user);
 
@@ -47,13 +47,9 @@ public class JwtService : IJwtService
             expires: expiresIn,
             signingCredentials: credentials);
 
-        var jwt = new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
+        string jwt = new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
 
-        var jwtDetails = new JwtDetails();
-        jwtDetails.AccessToken = jwt;
-        jwtDetails.Expires = expiresIn;
-        jwtDetails.Sid = user.Id;
-        jwtDetails.TokenType = "Bearer";
+        JwtDetails jwtDetails = new JwtDetails(user.Id, "Bearer", jwt, expiresIn);
 
         return jwtDetails;
     }

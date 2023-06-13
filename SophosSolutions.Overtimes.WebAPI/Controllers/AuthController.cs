@@ -3,29 +3,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SophosSolutions.Overtimes.Application.Common.Models;
 using SophosSolutions.Overtimes.Application.Users.Commands;
-using SophosSolutions.Overtimes.Application.Users.Queries;
-using SophosSolutions.Overtimes.Models.Entities;
-using SophosSolutions.Overtimes.Models.Enums;
+using SophosSolutions.Overtimes.Application.Users.Common;
 
 namespace SophosSolutions.Overtimes.WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class UserController : ControllerBase
+public class AuthController : ControllerBase
 {
     private readonly ISender _mediator;
-    public UserController(ISender mediator)
+
+    public AuthController(ISender mediator)
     {
         _mediator = mediator;
-    }
-
-    [HttpGet]
-    [Authorize(Roles = "GeneralManager")]
-    public async Task<ActionResult<IEnumerable<User>>> GetAllAsync()
-    {
-        var users = await _mediator.Send(new GetAllUsersQuery());
-        return Ok(users);
     }
 
     [HttpPost("sign-up")]

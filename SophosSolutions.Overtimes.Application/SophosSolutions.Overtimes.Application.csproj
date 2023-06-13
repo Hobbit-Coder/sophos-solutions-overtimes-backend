@@ -18,8 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Roles\" />
-    <Folder Include="Overtimes\" />
+    <Folder Include="Areas\Common\" />
+    <Folder Include="Overtimes\Common\" />
+    <Folder Include="Roles\Common\" />
   </ItemGroup>
 
 </Project>

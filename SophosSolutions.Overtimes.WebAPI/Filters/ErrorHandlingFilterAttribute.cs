@@ -18,6 +18,7 @@ public class ErrorHandlingFilterAttribute : ExceptionFilterAttribute
             { typeof(NotFoundException), HandleNotFoundException },
             { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
             { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
+            { typeof(DomainEventException), HandleDomainEventException }
         };
     }
 
@@ -51,21 +52,9 @@ public class ErrorHandlingFilterAttribute : ExceptionFilterAttribute
         {
             Instance = context.HttpContext.Request.Path,
             Detail = exception.Message,
-            Title = "Petición no valida",
+            Title = "Errores al validar tus datos",
             Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
             Status = (int)HttpStatusCode.BadRequest
-        };
-
-        context.Result = new BadRequestObjectResult(details);
-
-        context.ExceptionHandled = true;
-    }
-
-    private void HandleInvalidModelStateException(ExceptionContext context)
-    {
-        var details = new ValidationProblemDetails(context.ModelState)
-        {
-            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
         };
 
         context.Result = new BadRequestObjectResult(details);
@@ -93,17 +82,18 @@ public class ErrorHandlingFilterAttribute : ExceptionFilterAttribute
 
     private void HandleUnauthorizedAccessException(ExceptionContext context)
     {
+        var exception = (UnauthorizedAccessException)context.Exception;
+
         var details = new ProblemDetails
         {
+            Instance = context.HttpContext.Request.Path,
+            Detail = exception.Message,
             Status = StatusCodes.Status401Unauthorized,
             Title = "Unauthorized",
             Type = "https://tools.ietf.org/html/rfc7235#section-3.1"
         };
 
-        context.Result = new ObjectResult(details)
-        {
-            StatusCode = StatusCodes.Status401Unauthorized
-        };
+        context.Result = new UnauthorizedObjectResult(details);
 
         context.ExceptionHandled = true;
     }
@@ -112,6 +102,8 @@ public class ErrorHandlingFilterAttribute : ExceptionFilterAttribute
     {
         var details = new ProblemDetails
         {
+            Instance = context.HttpContext.Request.Path,
+            Detail = context.Exception.Message,
             Status = StatusCodes.Status403Forbidden,
             Title = "Forbidden",
             Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3"
@@ -121,6 +113,34 @@ public class ErrorHandlingFilterAttribute : ExceptionFilterAttribute
         {
             StatusCode = StatusCodes.Status403Forbidden
         };
+
+        context.ExceptionHandled = true;
+    }
+
+    private void HandleInvalidModelStateException(ExceptionContext context)
+    {
+        var details = new ValidationProblemDetails(context.ModelState)
+        {
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
+        };
+
+        context.Result = new BadRequestObjectResult(details);
+
+        context.ExceptionHandled = true;
+    }
+
+    private void HandleDomainEventException(ExceptionContext context)
+    {
+        var details = new ProblemDetails
+        {
+            Instance = context.HttpContext.Request.Path,
+            Detail = context.Exception.Message,
+            Status = StatusCodes.Status400BadRequest,
+            Title = "Error to process domain event!",
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3"
+        };
+
+        context.Result = new BadRequestObjectResult(details);
 
         context.ExceptionHandled = true;
     }

@@ -1,13 +1,15 @@
-﻿using SophosSolutions.Overtimes.Models.Entities;
-using SophosSolutions.Overtimes.Models.Enums;
+﻿using SophosSolutions.Overtimes.Application.Common.Models;
+using SophosSolutions.Overtimes.Models.Entities;
+using SophosSolutions.Overtimes.Models.ValueObjects;
 
 namespace SophosSolutions.Overtimes.Application.Common.Interfaces.Repositories;
 
 public interface IUserRepository : IRepository<User>
 {
-    Task<bool> CreateAsync(User user, string password);
+    Task<Result> CreateAsync(User user, string password);
     Task<bool> ValidatePasswordAsync(User user, string password);
     Task<User> GetByEmailAsync(string email);
-    Task<bool> AddRoleAsync(User user, Roles role);
+    Task<Result> AddRoleAsync(User user, RoleName role);
     Task<IList<string>> GetRolesAsync(User user);
+    Task<Result> UpdateUserAsync(User user);
 }

@@ -2,8 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SophosSolutions.Overtimes.Models.Entities;
-using SophosSolutions.Overtimes.Models.Enums;
-using System.Linq;
+using SophosSolutions.Overtimes.Models.ValueObjects;
 
 namespace SophosSolutions.Overtimes.Infrastructure.Persistence.Contexts;
 
@@ -55,16 +54,16 @@ public class OvertimesDbContextSeed
     {
         // Default roles
         var GeneralManagerRole = new Role();
-        GeneralManagerRole.Name = Roles.GeneralManager.ToString();
+        GeneralManagerRole.Name = RoleName.GeneralManager;
 
         var HumanTalentManagerRole = new Role();
-        HumanTalentManagerRole.Name = Roles.HumanTalentManager.ToString();
+        HumanTalentManagerRole.Name = RoleName.HumanTalentManager;
 
         var AreaManagerRole = new Role();
-        AreaManagerRole.Name = Roles.AreaManager.ToString();
+        AreaManagerRole.Name = RoleName.AreaManager;
 
         var CollaboratorRole = new Role();
-        CollaboratorRole.Name = Roles.Collaborator.ToString();
+        CollaboratorRole.Name = RoleName.Collaborator;
 
         var DefaultRoles = new List<Role>
         {
@@ -79,15 +78,44 @@ public class OvertimesDbContextSeed
             await _roleManager.CreateAsync(role);
         }
 
+        // Default areas
+        var management = new Area("Management");
+        if (_dbContext.TblAreas.All(area => area.Name != management.Name))
+        {
+            _dbContext.TblAreas.Add(management);
+        }
+
+        var it = new Area("Computing and technology");
+        if (_dbContext.TblAreas.All(area => area.Name != management.Name))
+        {
+            _dbContext.TblAreas.Add(it);
+        }
+
+        await _dbContext.SaveChangesAsync();
+
         // Default users
-        var administrator = new User("Test", "User");
-        administrator.UserName = "administrator@test.com";
-        administrator.Email = "administrator@test.com";
+        var administrator = new User("Admin", "User");
+        administrator.UserName = "1234567890";
+        administrator.Email = "admin@test.com";
+        administrator.AreaId = management.Id;
 
         if (_userManager.Users.All(user => user.Email != administrator.Email))
         {
             await _userManager.CreateAsync(administrator, "Admin1234*");
-            await _userManager.AddToRoleAsync(administrator, GeneralManagerRole.Name);
+            await _userManager.AddToRoleAsync(administrator, RoleName.GeneralManager);
         }
+
+        var collaborator = new User("Collaborator", "User");
+        collaborator.UserName = "0987654321";
+        collaborator.Email = "collaborator@test.com";
+        collaborator.AreaId = it.Id;
+
+        if (_userManager.Users.All(user => user.Email != collaborator.Email))
+        {
+            await _userManager.CreateAsync(collaborator, "Admin1234*");
+            await _userManager.AddToRoleAsync(collaborator, RoleName.Collaborator);
+        }
+
+
     }
 }

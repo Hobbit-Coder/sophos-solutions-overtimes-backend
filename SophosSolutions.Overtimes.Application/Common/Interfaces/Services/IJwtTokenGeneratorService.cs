@@ -3,7 +3,7 @@ using SophosSolutions.Overtimes.Models.Entities;
 
 namespace SophosSolutions.Overtimes.Application.Common.Interfaces.Services;
 
-public interface IJwtService
+public interface IJwtTokenGeneratorService
 {
-    Task<JwtDetails> GenerateJWT(User user);
+    Task<JwtDetails> Generate(User user);
 }
