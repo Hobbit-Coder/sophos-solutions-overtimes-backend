@@ -6,6 +6,14 @@
 
 Este proyecto fue desarrollado con .Net 6.
 
+## Librerías nuget utilizadas
+
+- AutoMapper
+- MediatR
+- Entity framework core
+- Identity entity framework core
+- Microsoft AspNetCore Authentication JwtBearer
+
 ## Patrones de Diseño Aplicados
 
 - Mediator
