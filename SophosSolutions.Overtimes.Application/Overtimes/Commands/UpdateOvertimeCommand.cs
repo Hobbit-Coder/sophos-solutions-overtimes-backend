@@ -15,7 +15,7 @@ public class UpdateOvertimeCommand : IRequest
     public Status Status { get; set; }
 }
 
-public class UpdateOvertimeCommandHandler : IRequestHandler<UpdateOvertimeCommand>
+internal class UpdateOvertimeCommandHandler : IRequestHandler<UpdateOvertimeCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
 

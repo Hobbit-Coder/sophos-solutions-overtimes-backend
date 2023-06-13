@@ -33,7 +33,6 @@ public class OvertimesDbContextSeed
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while initialising the database.");
-            throw;
         }
     }
 
@@ -45,8 +44,7 @@ public class OvertimesDbContextSeed
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while seeding the database.");
-            throw;
+            _logger.LogError(ex, "An error occurred while seeding the database.");            
         }
     }
 

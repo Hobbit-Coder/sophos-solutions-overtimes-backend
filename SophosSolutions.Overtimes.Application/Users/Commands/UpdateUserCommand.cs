@@ -17,7 +17,7 @@ public class UpdateUserCommand : IRequest
     public Guid RoleId { get; set; }
 }
 
-public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
+internal class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
 

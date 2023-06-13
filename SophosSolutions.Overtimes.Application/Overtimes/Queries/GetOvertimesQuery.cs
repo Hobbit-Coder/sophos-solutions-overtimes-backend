@@ -10,7 +10,7 @@ public class GetOvertimesQuery : IRequest<IEnumerable<Overtime>>
     public Guid? UserId { get; set; }
 }
 
-public class GetOvertimesQueryHandler : IRequestHandler<GetOvertimesQuery, IEnumerable<Overtime>>
+internal class GetOvertimesQueryHandler : IRequestHandler<GetOvertimesQuery, IEnumerable<Overtime>>
 {
     private readonly IUnitOfWork _unitOfWork;
 

@@ -9,7 +9,7 @@ public class GetRolesQuery : IRequest<IEnumerable<GetRoleResponse>>
 {
 }
 
-public class GetRolesQueryHandler : IRequestHandler<GetRolesQuery, IEnumerable<GetRoleResponse>>
+internal class GetRolesQueryHandler : IRequestHandler<GetRolesQuery, IEnumerable<GetRoleResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;

@@ -12,7 +12,7 @@ public class AuthenticateUserCommand : IRequest<JwtDetails>
     public string? Password { get; set; }
 }
 
-public class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCommand, JwtDetails>
+internal class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCommand, JwtDetails>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IJwtTokenGeneratorService _jwtService;

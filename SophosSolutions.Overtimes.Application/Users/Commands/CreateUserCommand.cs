@@ -17,7 +17,7 @@ public class CreateUserCommand : IRequest<CreateUserReponse>
     public string? Password { get; set; }
 }
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreateUserReponse>
+internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreateUserReponse>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
