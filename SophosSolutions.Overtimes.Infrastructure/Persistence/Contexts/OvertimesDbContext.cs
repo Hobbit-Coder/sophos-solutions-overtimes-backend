@@ -13,6 +13,8 @@ public class OvertimesDbContext : IdentityDbContext<User, Role, Guid>
     public OvertimesDbContext(DbContextOptions<OvertimesDbContext> options)
         : base(options)
     {
+        TblOvertimes = Set<Overtime>();
+        TblAreas = Set<Area>();
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
