@@ -8,8 +8,14 @@ namespace SophosSolutions.Overtimes.Application.Users.Commands;
 
 public class AuthenticateUserCommand : IRequest<JwtDetails>
 {
-    public string? Email { get; set; }
-    public string? Password { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+
+    public AuthenticateUserCommand(string email, string password)
+    {
+        Email = email;
+        Password = password;
+    }
 }
 
 internal class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCommand, JwtDetails>
@@ -29,7 +35,7 @@ internal class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUser
 
         if (user is null)
         {
-            throw new ForbiddenAccessException($"User {request.Email} not found!");
+            throw new NotFoundException($"User {request.Email} not found!");
         }
 
         var isValid = await _unitOfWork.UserRepository.ValidatePasswordAsync(user, request.Password!);

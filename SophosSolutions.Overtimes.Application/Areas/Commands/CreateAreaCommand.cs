@@ -7,8 +7,13 @@ namespace SophosSolutions.Overtimes.Application.Areas.Commands;
 
 public class CreateAreaCommand : IRequest<Guid>
 {
-    public string? Name { get; set; }
+    public string Name { get; set; }
     public string? Description { get; set; }
+
+    public CreateAreaCommand(string name)
+    {
+        Name = name;
+    }
 }
 
 internal class CreateAreaCommandHandler : IRequestHandler<CreateAreaCommand, Guid>

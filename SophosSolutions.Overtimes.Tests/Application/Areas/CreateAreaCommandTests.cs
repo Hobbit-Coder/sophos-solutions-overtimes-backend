@@ -10,40 +10,37 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SophosSolutions.Overtimes.Tests.Application.Areas
+namespace SophosSolutions.Overtimes.Tests.Application.Areas;
+
+public class CreateAreaCommandTests
 {
-    public class CreateAreaCommandTests
+    [Fact]
+    public async Task ShouldCreateAreaCommandTest()
     {
-        [Fact]
-        public async Task ShouldCreateAreaCommandTest()
-        {
-            // Mock
-            Mock<IUnitOfWork> unitOfWorkMock = new Mock<IUnitOfWork>();
-            Mock<IMapper> mapperMock = new Mock<IMapper>();
+        // Mock
+        Mock<IUnitOfWork> unitOfWorkMock = new Mock<IUnitOfWork>();
+        Mock<IMapper> mapperMock = new Mock<IMapper>();
 
-            // Arrange
-            var command = new CreateAreaCommand();
-            command.Name = string.Empty;
-            command.Description = string.Empty;
-            var handler = new CreateAreaCommandHandler(unitOfWorkMock.Object, mapperMock.Object);
-            var area = new Area(command.Name) { Description = command.Description };
+        // Arrange
+        var command = FakeCommandsDataMock.CreateAreaCommand;
+        var handler = new CreateAreaCommandHandler(unitOfWorkMock.Object, mapperMock.Object);
+        var area = FakeEntitiesDataMock.Area;
 
-            // Setups
-            mapperMock.Setup(mock => mock.Map<Area>(command)).Returns(area);
-            unitOfWorkMock.Setup(mock => mock.AreaRepository.Add(area)).Returns(true);
-            unitOfWorkMock.Setup(mock => mock.CompleteAsync(CancellationToken.None)).ReturnsAsync(1);
+        // Setups
+        mapperMock.Setup(mock => mock.Map<Area>(command)).Returns(area);
+        unitOfWorkMock.Setup(mock => mock.AreaRepository.Add(area)).Returns(true);
+        unitOfWorkMock.Setup(mock => mock.CompleteAsync(CancellationToken.None)).ReturnsAsync(1);
 
-            // Act
-            var result = await handler.Handle(command, CancellationToken.None);
+        // Act
+        var result = await handler.Handle(command, CancellationToken.None);
 
-            // Assert
-            Assert.NotEqual<Guid>(Guid.Empty, result);
-            Assert.Equal(area.Id, result);
+        // Assert
+        Assert.NotEqual(Guid.Empty, result);
+        Assert.Equal(area.Id, result);
 
-            // Validate
-            unitOfWorkMock.Verify(mock => mock.AreaRepository.Add(area));
-            unitOfWorkMock.Verify(mock => mock.CompleteAsync(CancellationToken.None));
-            mapperMock.Verify(mock => mock.Map<Area>(command), Times.Once);
-        }
+        // Validate
+        unitOfWorkMock.Verify(mock => mock.AreaRepository.Add(area));
+        unitOfWorkMock.Verify(mock => mock.CompleteAsync(CancellationToken.None));
+        mapperMock.Verify(mock => mock.Map<Area>(command), Times.Once);
     }
 }
