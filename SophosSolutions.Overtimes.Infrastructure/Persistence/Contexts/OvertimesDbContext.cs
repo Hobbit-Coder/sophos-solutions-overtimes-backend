@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SophosSolutions.Overtimes.Application.Common.Interfaces.Services;
 using SophosSolutions.Overtimes.Models.Common;
 using SophosSolutions.Overtimes.Models.Entities;
 
@@ -10,11 +11,15 @@ public class OvertimesDbContext : IdentityDbContext<User, Role, Guid>
     public DbSet<Overtime> TblOvertimes { get; set; }
     public DbSet<Area> TblAreas { get; set; }
 
-    public OvertimesDbContext(DbContextOptions<OvertimesDbContext> options)
+    private readonly ICurrentUserService _currentUserService;
+
+    public OvertimesDbContext(DbContextOptions<OvertimesDbContext> options, ICurrentUserService currentUserService)
         : base(options)
     {
         TblOvertimes = Set<Overtime>();
         TblAreas = Set<Area>();
+
+        _currentUserService = currentUserService;
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -24,11 +29,11 @@ public class OvertimesDbContext : IdentityDbContext<User, Role, Guid>
             switch (entry.State)
             {
                 case EntityState.Added:
-                    entry.Entity.CreatedBy = Guid.Empty;
+                    entry.Entity.CreatedBy = _currentUserService.UserId;
                     entry.Entity.CreatedOn = DateTime.UtcNow;
                     break;
                 case EntityState.Modified:
-                    entry.Entity.ModifiedBy = Guid.Empty;
+                    entry.Entity.ModifiedBy = _currentUserService.UserId;
                     entry.Entity.ModifiedOn = DateTime.UtcNow;
                     break;
             }

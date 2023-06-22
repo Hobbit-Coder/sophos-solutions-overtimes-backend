@@ -45,6 +45,11 @@ internal class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUser
             throw new ForbiddenAccessException("Invalid password!");
         }
 
+        if (user.ManagerId == null || user.ManagerId != Guid.Empty)
+        {
+            throw new DomainEventException("You are not yet assigned to an area manager!");
+        }
+
         var jwtDetails = await _jwtService.Generate(user);
 
         return jwtDetails;

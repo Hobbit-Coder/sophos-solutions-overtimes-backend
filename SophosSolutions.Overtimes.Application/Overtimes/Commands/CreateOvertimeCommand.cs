@@ -2,6 +2,7 @@
 using MediatR;
 using SophosSolutions.Overtimes.Application.Common.Exceptions;
 using SophosSolutions.Overtimes.Application.Common.Interfaces.Repositories;
+using SophosSolutions.Overtimes.Application.Common.Interfaces.Services;
 using SophosSolutions.Overtimes.Models.Entities;
 using SophosSolutions.Overtimes.Models.Enums;
 
@@ -20,16 +21,21 @@ internal class CreateOvertimeCommandHandle : IRequestHandler<CreateOvertimeComma
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly ICurrentUserService _currentUserService;
 
-    public CreateOvertimeCommandHandle(IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateOvertimeCommandHandle(IUnitOfWork unitOfWork, IMapper mapper, ICurrentUserService currentUserService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _currentUserService = currentUserService;
     }
 
     public async Task<Guid> Handle(CreateOvertimeCommand request, CancellationToken cancellationToken)
     {
-        var OvertimesInMoth = await _unitOfWork.OvertimeRepository.FindAsync(overtime => overtime.Date.Month == request.Date.Month);
+        var OvertimesInMoth = await _unitOfWork.OvertimeRepository.FindAsync(overtime =>
+                                        overtime.Date.Month == request.Date.Month &&
+                                        overtime.UserId == _currentUserService.UserId
+                                    );
         var hours = OvertimesInMoth.Sum(over => over.Hours);
 
         if (hours >= 40)
@@ -38,7 +44,9 @@ internal class CreateOvertimeCommandHandle : IRequestHandler<CreateOvertimeComma
         }
 
         var overtime = _mapper.Map<Overtime>(request);
+
         _unitOfWork.OvertimeRepository.Add(overtime);
+
         await _unitOfWork.CompleteAsync(cancellationToken);
 
         return overtime.Id;

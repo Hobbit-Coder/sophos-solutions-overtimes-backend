@@ -38,7 +38,7 @@ public static class Configuration
         });
 
         services.AddScoped<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
-
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         return services;
     }
